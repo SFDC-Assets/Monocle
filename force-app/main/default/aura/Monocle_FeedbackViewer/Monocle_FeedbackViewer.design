@@ -1,0 +1,6 @@
+<design:component label="Monocle - Feedback Viewer">
+    <sfdc:objects>
+        <sfdc:object>VoiceCall</sfdc:object>
+        <sfdc:object>LiveChatTranscript</sfdc:object>
+    </sfdc:objects>
+</design:component>

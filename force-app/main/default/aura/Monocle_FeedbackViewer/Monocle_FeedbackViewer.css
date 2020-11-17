@@ -1,0 +1,145 @@
+.THIS 
+{
+    background-color:#fff;
+}
+.THIS .slds-form-element__icon
+{
+    padding-top:0px;
+}
+
+.THIS.wrapper {
+position:relative;
+    /*
+    background:#f2f2f2;
+    */
+    margin-top:10px;
+    padding-bottom:0px;
+    border:1px solid #d8dde6;
+}
+
+.cMonocle_FeedbackViewer span.fscore {
+    background: #FFFFFF;
+    border-radius: 2em;
+    border: 2px solid #0F8048;
+    -moz-border-radius: 1.4em;
+    -webkit-border-radius: 1.4em;
+    color: #0F8048;
+    display: inline-block;
+    font-weight: 500;
+    font-size: 1.3em;
+    line-height: 2.8em;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top:3px;
+    text-align: center;
+    width: 3em; 
+    vertical-align: middle;
+    align-self: left;
+    float:left;
+}
+
+.cMonocle_FeedbackViewer span.goodnum {
+    border: 2px solid #0F8048;
+    color: #0F8048;
+}
+
+.cMonocle_FeedbackViewer span.oknum {
+    border: 2px solid #F19D46;
+    color: #F19D46;
+}
+
+.cMonocle_FeedbackViewer span.badnum {
+    border: 2px solid #C23934;
+    color: #C23934;
+}
+
+.cMonocle_FeedbackViewer.wrapper{
+	border-top-right-radius:4px;
+	border-top-left-radius:4px;
+    border-bottom-right-radius:4px;
+	border-bottom-left-radius:4px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.10);
+}
+
+.cMonocle_FeedbackViewer .center-card{
+    vertical-align:middle;
+    padding-top:10px;
+    padding-bottom:10px;
+    height:75px;
+    padding-left:5px;
+    float:left;
+}
+
+.cMonocle_FeedbackViewer .right-center-card{
+    padding-top:5px;
+    padding-right:15px;
+    float:right;
+}
+
+
+.cMonocle_FeedbackViewer .top-card{
+	float:left;
+    border-top-left-radius:4px;
+	border-top-right-radius:4px;
+    text-align:center;
+    vertical-align:middle;
+    background-color:#fff;
+    width:100%;
+    background-image:url('/resource/einstein_cloud_background');
+    background-size: cover;
+    margin-top:-1px;
+}
+
+.cMonocle_FeedbackViewer .top-card h1{
+    font-size:16px;
+    padding-bottom:3px;
+    float:left;
+    margin-top:17px;
+    margin-left:3px;
+    vertical-align:middle;
+}
+
+.cMonocle_FeedbackViewer .top-card img{
+	margin-bottom:-6px;
+}
+
+
+.cMonocle_FeedbackViewer .bottom-card{
+	padding-top:80px;
+    padding-left:15px;
+    background-color:#ffffff;
+    width:100%;
+    min-height:150px;
+    padding-bottom:15px;
+    border-bottom-right-radius:4px;
+	border-bottom-left-radius:4px;
+}
+
+.cMonocle_FeedbackViewer .bottom-card li{
+    padding-bottom:8px;
+}
+
+.cMonocle_FeedbackViewer .bottom-card li img{
+    margin-top:-3px;
+    padding-right:4px;
+}
+
+.cMonocle_FeedbackViewer .bottom-card h3{
+    padding-top:15px;
+	padding-bottom:8px;
+    font-size:14px;
+}
+
+.THIS.title{
+    color: rgb(22, 50, 92);
+    font-weight: 400;
+    font-size: 1rem;
+    margin-bottom:10px;
+    margin-top:10px;
+} 
+.THIS.title > img{
+    width: 50px;
+    margin-right: 5px;
+    margin-top: -1px;
+}

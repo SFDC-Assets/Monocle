@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ElapsedTime__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(FLOOR(( CreatedDate -  Feedback_Response__r.CreatedDate  ) * 24) &lt; 1, &quot;&quot;,
+Text(
+FLOOR(( CreatedDate -  Feedback_Response__r.CreatedDate  ) * 24))
+
+&amp;&quot;hr &quot;) &amp;Text(
+
+FLOOR((( CreatedDate -  Feedback_Response__r.CreatedDate  ) * 24 - FLOOR(( CreatedDate -  Feedback_Response__r.CreatedDate  ) * 24))* 60))
+
+&amp;&quot;min &quot;&amp;Text(
+
+FLOOR((( ( CreatedDate -  Feedback_Response__r.CreatedDate  ) * 24 - FLOOR(( CreatedDate -  Feedback_Response__r.CreatedDate  ) * 24 )) * 60 - FLOOR((( CreatedDate -  Feedback_Response__r.CreatedDate  ) * 24 - FLOOR(( CreatedDate -  Feedback_Response__r.CreatedDate  ) * 24 )) * 60 )) * 60 )) &amp; &quot;sec&quot;</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Elapsed Time</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
