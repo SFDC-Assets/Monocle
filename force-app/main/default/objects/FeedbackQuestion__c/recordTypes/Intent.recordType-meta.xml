@@ -69,7 +69,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Agent and Customer</fullName>
+            <fullName>Agent or Customer</fullName>
             <default>false</default>
         </values>
         <values>

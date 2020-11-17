@@ -36,7 +36,7 @@ public class Monocle_Helper
             //Check the keywords
             else if (!response.Completed__c && 
                      response.Feedback_Question__r.RecordTypeId == keywordRTId &&
-                     (response.Feedback_Question__r.Speaker__c.toLowerCase() == speaker.toLowerCase() || response.Feedback_Question__r.Speaker__c == 'Agent and Customer')
+                     (response.Feedback_Question__r.Speaker__c.toLowerCase() == speaker.toLowerCase() || response.Feedback_Question__r.Speaker__c == 'Agent or Customer')
                      )
             {
                 String keywordMatch = checkKeywordMatch(utteranceText, response.Feedback_Question__r.Match_Phrase__c, response.Feedback_Question__r.ExtractionType__c);
@@ -62,7 +62,7 @@ public class Monocle_Helper
                     if (!response.Completed__c && 
                         response.Feedback_Question__r.RecordTypeId == intentRTId && 
                         match.toLowerCase() == response.Feedback_Question__r.Intent_developer_name__c.toLowerCase() &&
-                        (response.Feedback_Question__r.Speaker__c.toLowerCase() == speaker.toLowerCase() || response.Feedback_Question__r.Speaker__c == 'Agent and Customer'))
+                        (response.Feedback_Question__r.Speaker__c.toLowerCase() == speaker.toLowerCase() || response.Feedback_Question__r.Speaker__c == 'Agent or Customer'))
                     {
                         response.Completed__c = true;
                         response.Utterance__c = utteranceText;
@@ -86,7 +86,7 @@ public class Monocle_Helper
                         response.Feedback_Question__r.RecordTypeId == nerRTId && 
                         cI.probability * 100 >= objFeedback.IntentTolerance__c && 
                         response.Feedback_Question__r.EntityType__c.toLowerCase() == cI.label.toLowerCase() && 
-                        (response.Feedback_Question__r.Speaker__c.toLowerCase() == speaker.toLowerCase() || response.Feedback_Question__r.Speaker__c == 'Agent and Customer'))
+                        (response.Feedback_Question__r.Speaker__c.toLowerCase() == speaker.toLowerCase() || response.Feedback_Question__r.Speaker__c == 'Agent or Customer'))
                     {
                         response.Completed__c = true;
                         response.Utterance__c = utteranceText;

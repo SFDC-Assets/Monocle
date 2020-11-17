@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Match_Phrase__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>This contains the keyword literal, Pipe &quot;|&quot; separated list of literals, or RegEx pattern for the Keyword Match Question type</inlineHelpText>
     <label>Match Phrase</label>
     <length>32000</length>
     <trackTrending>false</trackTrending>

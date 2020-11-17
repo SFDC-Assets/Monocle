@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ExtractionType__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>Select an extraction type for a keyword match Question Type</inlineHelpText>
     <label>Extraction Type</label>
     <required>false</required>
     <trackTrending>false</trackTrending>

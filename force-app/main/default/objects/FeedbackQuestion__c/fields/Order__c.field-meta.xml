@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Order__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>This holds the order for how questions will be displayed in the component.</inlineHelpText>
     <label>Order</label>
     <precision>18</precision>
     <required>false</required>

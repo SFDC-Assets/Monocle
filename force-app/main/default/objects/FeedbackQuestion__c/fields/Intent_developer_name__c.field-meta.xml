@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Intent_developer_name__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>The Intent developer name for the Intent Match Question Type</inlineHelpText>
     <label>Intent Developer Name</label>
     <length>255</length>
     <required>false</required>
