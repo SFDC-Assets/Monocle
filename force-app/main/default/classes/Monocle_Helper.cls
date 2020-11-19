@@ -141,6 +141,12 @@ public class Monocle_Helper
         if (responsequestions.size() > 0)
         {
             responseScore = Integer.valueof(Decimal.valueOf(completed)/Decimal.valueOf(responsequestions.size()) * 100);
+            
+            //CHANGE TO WORK WITH Progress Ring
+            Decimal s = Decimal.valueOf(responseScore) / 10;
+            s = s.round(System.RoundingMode.HALF_UP) * 10;
+            return Integer.valueOf(s);
+            // END CHANGE
         }
         return responseScore;
     }

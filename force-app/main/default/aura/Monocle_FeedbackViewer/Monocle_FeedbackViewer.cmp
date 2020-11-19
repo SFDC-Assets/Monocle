@@ -27,53 +27,61 @@
         
         <div class="top-card">
             <div class="center-card">
-                <span class="{!v.feedbackResponseScore > 80 ? 'fscore goodnum': (v.feedbackResponseScore > 50 ? 'fscore oknum' : 'fscore badnum')}">{!v.feedbackResponseScore}</span>
+                <div class="{!'radialProgressBar progress-' + v.feedbackResponseScore}">
+                    <div class="overlay">{!v.feedbackResponseScore}</div>
+                </div>
+                <!--<aura:if isTrue="{!not(empty(v.QuestionResponses))}"><span class="{!v.feedbackResponseScore > 80 ? 'fscore goodnum': (v.feedbackResponseScore > 50 ? 'fscore oknum' : 'fscore badnum')}" style="margin-top:8px;margin-left:10px;">{!v.feedbackResponseScore}</span></aura:if>-->
                 <span><h1>Quality Score</h1></span>
             </div>
             <div class="right-center-card">
                 <img src="/resource/einstein_only"/>
             </div>
-            
         </div>
         
         <!-- Show Sentiment Chart -->
         <c:Monocle_SentimentChart aura:id="sentimentComp" recordId="{!v.recordId}"></c:Monocle_SentimentChart>
         
+        
         <div style="padding:10px;display:inline-block;">
-            Intent and Entity Recognition
-            <table>
-                <aura:iteration items="{!v.QuestionResponses}" var="item">
-                    <tr>
-                        <td style="text-align:center;vertical-align:middle;">
-                            <aura:if isTrue="{!item.Completed__c}">
-                                <lightning:dynamicIcon type="trend" option="up" alternativeText="Completed"/>
-                                <!-- <lightning:icon iconName="action:approval" size="xx-small" alternativeText="Completed"  />-->
-                            </aura:if>
-                            <aura:if isTrue="{!and(!item.Completed__c, v.active)}">
-                                <div class="slds-icon-eq slds-is-animated" title="Processing..." style="display:inline-flex;">
-                                    <div class="slds-icon-eq__bar"></div>
-                                    <div class="slds-icon-eq__bar"></div>
-                                    <div class="slds-icon-eq__bar"></div>
-                                </div>
-                            </aura:if>
-                            <aura:if isTrue="{!and(!item.Completed__c, !v.active)}">
-                                <lightning:dynamicIcon type="trend" option="neutral" alternativeText="Not Completed"/>
-                            </aura:if>
-                        </td>
-                        <td style="margin:0px;padding-bottom:5px;padding-left:10px;padding-top:2px;">
-                            <span class="slds-card__body slds-card__body_inner" style="padding-left:0px;">{!item.Question_Text__c}</span>
-                            <aura:if isTrue="{!item.Completed__c}"><span style="padding-left:1px;"><lightning:helptext content="{!item.Speaker__c + ' said: ' + item.Utterance__c}" /></span></aura:if>
-                            <aura:if isTrue="{!not(empty(item.KeywordMatch__c))}"><div style="color:#0F8048">({!item.KeywordMatch__c})</div></aura:if>
-                            
-                        </td>
-                        <td>
-                            <aura:if isTrue="{!and(item.Completed__c, v.active)}">
-                                <button class="slds-button" type="button" onclick="{!c.clearFeedback}" data-qresponseid="{!item.Id}">Clear</button>
-                            </aura:if>
-                        </td>
-                    </tr>
-                </aura:iteration>
-            </table>
+            <aura:if isTrue="{!not(empty(v.QuestionResponses))}">
+                <b>Intent and Entity Recognition</b>
+                <table>
+                    <aura:iteration items="{!v.QuestionResponses}" var="item">
+                        <tr style="border-bottom:solid;border-width:.5px;border-color:#EEE;">
+                            <td style="text-align:center;vertical-align:middle;">
+                                <aura:if isTrue="{!item.Completed__c}">
+                                    <lightning:dynamicIcon type="trend" option="up" alternativeText="Completed"/>
+                                    <!-- <lightning:icon iconName="action:approval" size="xx-small" alternativeText="Completed"  />-->
+                                </aura:if>
+                                <aura:if isTrue="{!and(!item.Completed__c, v.active)}">
+                                    <div class="slds-icon-eq slds-is-animated" title="Processing..." style="display:inline-flex;">
+                                        <div class="slds-icon-eq__bar"></div>
+                                        <div class="slds-icon-eq__bar"></div>
+                                        <div class="slds-icon-eq__bar"></div>
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!and(!item.Completed__c, !v.active)}">
+                                    <lightning:dynamicIcon type="trend" option="neutral" alternativeText="Not Completed"/>
+                                </aura:if>
+                            </td>
+                            <td style="margin:0px;padding-bottom:5px;padding-left:10px;padding-top:2px;">
+                                <span class="slds-card__body slds-card__body_inner" style="padding-left:0px;">{!item.Question_Text__c}</span>
+                                <aura:if isTrue="{!item.Completed__c}"><span style="padding-left:1px;"><lightning:helptext content="{!item.Speaker__c + ' said: ' + item.Utterance__c}" /></span></aura:if>
+                                <aura:if isTrue="{!not(empty(item.KeywordMatch__c))}"><div style="color:#0F8048">({!item.KeywordMatch__c})</div></aura:if>
+                                
+                            </td>
+                            <td>
+                                <aura:if isTrue="{!and(item.Completed__c, v.active)}">
+                                    <button class="slds-button" type="button" onclick="{!c.clearFeedback}" data-qresponseid="{!item.Id}">Clear</button>
+                                </aura:if>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </table>
+                <aura:set attribute="else">
+                    No Feedback response found for this record.
+                </aura:set>
+            </aura:if>
         </div>
     </div>
 </aura:component>
