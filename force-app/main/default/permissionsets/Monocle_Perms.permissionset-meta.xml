@@ -15,6 +15,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>FeedbackQuestion__c.HelpText__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>FeedbackQuestion__c.Intent_developer_name__c</field>
         <readable>true</readable>

@@ -7,11 +7,13 @@
     <aura:attribute name="QuestionResponses" type="Feedback_Question_Response__c[]" />
     <aura:attribute name="message" type="String" default="No events received yet."/>
     <aura:attribute name="active" type="Boolean" default="false" />
+    <aura:attribute name="disabled" type="Boolean" default="false" />
     
     <!-- init-->
     <aura:handler name="init" value="{!this }" action="{! c.doInit}"/>
     <!-- destroy -->
     <aura:handler name="destroy" value="{!this}" action="{!c.onDestroy}"/>
+    <aura:registerEvent name="appEvent" type="c:Monocle_ItemRefresh"/>
     
     <!-- voice message subscribers -->
     <force:serviceCloudVoiceToolkitApi aura:id="voiceToolkitApi"/>
@@ -42,16 +44,17 @@
         <c:Monocle_SentimentChart aura:id="sentimentComp" recordId="{!v.recordId}"></c:Monocle_SentimentChart>
         
         
-        <div style="padding:10px;display:inline-block;">
+        <div style="padding:10px;display:inline-block;width:100%;">
             <aura:if isTrue="{!not(empty(v.QuestionResponses))}">
                 <b>Intent and Entity Recognition</b>
                 <table>
                     <aura:iteration items="{!v.QuestionResponses}" var="item">
-                        <tr style="border-bottom:solid;border-width:.5px;border-color:#EEE;">
+                        <tr>
+                            <c:Monocle_FeedbackItem feedbackQRId="{!item.Id}" selfUpdate="false" margin="4" active="{!v.active}"  disabled="{!v.disabled}" />
+                            <!-- OLD CODE
                             <td style="text-align:center;vertical-align:middle;">
                                 <aura:if isTrue="{!item.Completed__c}">
                                     <lightning:dynamicIcon type="trend" option="up" alternativeText="Completed"/>
-                                    <!-- <lightning:icon iconName="action:approval" size="xx-small" alternativeText="Completed"  />-->
                                 </aura:if>
                                 <aura:if isTrue="{!and(!item.Completed__c, v.active)}">
                                     <div class="slds-icon-eq slds-is-animated" title="Processing..." style="display:inline-flex;">
@@ -74,7 +77,7 @@
                                 <aura:if isTrue="{!and(item.Completed__c, v.active)}">
                                     <button class="slds-button" type="button" onclick="{!c.clearFeedback}" data-qresponseid="{!item.Id}">Clear</button>
                                 </aura:if>
-                            </td>
+                            </td>-->
                         </tr>
                     </aura:iteration>
                 </table>

@@ -1,0 +1,73 @@
+<aura:component access="global" implements="flexipage:availableForAllPageTypes,lightning:availableForFlowScreens" controller="Monocle_Helper">
+    <aura:attribute name="componentTitle" type="String" default="" />
+    <aura:attribute name="feedbackQRId" type="String" />
+    <aura:attribute name="inputTitle" type="String" default="" />
+    <aura:attribute name="helpText" type="String" default="" />
+    <aura:attribute name="matchType" type="String" default="Intent" />
+    <aura:attribute name="matchValue" type="String" default="" />
+    <aura:attribute name="speakerMatch" type="String" default="Agent" />
+    <aura:attribute name="modelID" type="String" default="" />
+    <aura:attribute name="tolerance" type="Integer" default="65" />
+    
+    
+    <aura:attribute name="speaker" type="String" default="" />    
+    <aura:attribute name="inputType" type="String" default="text" />
+    <aura:attribute name="selfUpdate" type="Boolean" default="true"  />
+    <aura:attribute name="completed" type="Boolean" default="false"  />
+    <aura:attribute name="active" type="Boolean" default="true"  />
+    <aura:attribute name="strValue" type="String" default=""  />
+    <aura:attribute name="utterance" type="String" default="the utterance" />
+    <aura:attribute name="disabled" type="Boolean" default="false"  />
+    <aura:attribute name="margin" type="String" default="10" />
+    
+    <aura:attribute name="oValueBool" type="Boolean" default="false" />
+    <aura:attribute name="oValueString" type="String" default="" />
+    
+    <!-- init-->
+    <aura:handler name="init" value="{!this }" action="{! c.doInit}"/>
+    <aura:handler event="c:Monocle_ItemRefresh" action="{!c.doRefresh}"/>
+    <!-- destroy -->
+    <aura:handler name="destroy" value="{!this}" action="{!c.onDestroy}"/>
+    <aura:handler event="lightning:conversationNewMessage" action="{!c.onChatTranscriptCustomer}" />
+    <aura:handler event="lightning:conversationAgentSend" action="{!c.onChatTranscriptAgent}" />
+    <force:serviceCloudVoiceToolkitApi aura:id="voiceToolkitApi"/>
+    <lightning:conversationToolkitAPI aura:id="conversationKit" />
+    
+    <div style="{!'padding:' + v.margin + 'px;'}">
+        <b>{!v.componentTitle}</b>
+        <table>
+            <tr>
+                <td>
+                    <aura:if isTrue="{!and(!v.completed, v.active)}">
+                        <div class="slds-icon-eq slds-is-animated" title="Processing..." style="display:inline-flex;margin-right:5px;">
+                            <div class="slds-icon-eq__bar"></div>
+                            <div class="slds-icon-eq__bar"></div>
+                            <div class="slds-icon-eq__bar"></div>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.completed}">
+                        <span style="margin-right:5px;padding-top:10px;width:33px;">
+                            <lightning:icon iconName="utility:success" alternativeText="input match!" variant="Success" title="match" size="x-small" />
+                        </span>
+                    </aura:if>
+                    <span class="slds-form-element__label slds-no-flex" style="font-size:.75rem;">{!v.inputTitle}</span>
+                    <aura:if isTrue="{!and(v.helpText != null, v.helpText != '')}">
+                        <span style="padding-left:1px;">
+                            <lightning:helptext content="{!v.helpText}" />
+                        </span>
+                    </aura:if>
+                </td>
+                
+                <td style="text-align:right;">
+                    <aura:if isTrue="{!and(!v.completed, and(v.matchType == 'Intent', !v.disabled))}">
+                        <button class="slds-button" type="button" onclick="{!c.setField}" data-qresponseid="{!v.feedbackQRId}">Mark Complete</button>
+                    </aura:if>
+                    <aura:if isTrue="{!and(v.completed, !v.disabled)}">
+                        <button class="slds-button" type="button" onclick="{!c.clearField}" data-qresponseid="{!v.feedbackQRId}">Clear</button>
+                    </aura:if>
+                </td>
+            </tr>
+        </table>                    
+        <lightning:input label="{!v.inputTitle}" aura:id="theInput" oncommit="{!c.checkChange}" disabled="{!v.disabled}" value="{!v.strValue}" name="theInput" type="{!v.inputType}" checked="{!v.completed}" variant="label-hidden" />        
+    </div>
+</aura:component>

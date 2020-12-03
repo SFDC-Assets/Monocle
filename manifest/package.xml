@@ -16,6 +16,7 @@
         <members>FeedbackQuestion__c.EntityType__c</members>
         <members>FeedbackQuestion__c.ExtractionType__c</members>
         <members>FeedbackQuestion__c.Feedback__c</members>
+        <members>FeedbackQuestion__c.HelpText__c</members>
         <members>FeedbackQuestion__c.Intent_developer_name__c</members>
         <members>FeedbackQuestion__c.Match_Phrase__c</members>
         <members>FeedbackQuestion__c.Order__c</members>
@@ -60,6 +61,8 @@
     <types>
         <members>Monocle_FeedbackViewer</members>
         <members>Monocle_SentimentChart</members>
+        <members>Monocle_FeedbackItem</members>
+        <members>Monocle_ItemRefresh</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>

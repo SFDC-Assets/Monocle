@@ -66,6 +66,7 @@ public class Monocle_Helper
                     {
                         response.Completed__c = true;
                         response.Utterance__c = utteranceText;
+                        response.KeywordMatch__c = utteranceText;
                         response.Speaker__c = speaker;
                         needsUpdate = true;
                         break;
@@ -77,7 +78,7 @@ public class Monocle_Helper
         //Process NER
         if(needsNER && String.isNotBlank(utteranceText))
         {
-            einsteinplay.Einstein_PredictionResult results = CheckEinsteinNER(utteranceText, objFeedback.IntentTolerance__c);
+            einsteinplay.Einstein_PredictionResult results = CheckEinsteinNER(utteranceText);
             for (einsteinplay.Einstein_Probability cI : results.probabilities)
             {
                 for (Feedback_Question_Response__c response : responsequestions)
@@ -113,6 +114,127 @@ public class Monocle_Helper
         return responsequestions;
     }
     
+    @AuraEnabled
+    public static Feedback_Question_Response__c checkFeedbackItem(String feedbackQResponseId, string utteranceText, string speaker, string matchType, string matchValue, string speakerMatch, string modelID, Integer tolerance)
+    {
+        if (speaker.toLowerCase() == 'enduser')
+        {
+            speaker = 'Customer';
+        }
+        if (String.isBlank(utteranceText))
+        {
+            return null;
+        }
+        
+        Feedback_Question_Response__c retVal = new Feedback_Question_Response__c();
+        Boolean needsUpdate = false;
+        
+        if (String.isNotBlank(feedbackQResponseId))
+        {
+            Feedback_Question_Response__c responsequestion = [SELECT Id, Name, Speaker__c, KeywordMatch__c, Question_Text__c, Completed__c, Utterance__c, Feedback_Question__r.RecordTypeId, Feedback_Question__r.Speaker__c, Feedback_Question__r.Intent_developer_name__c, Feedback_Question__r.Match_Phrase__c,  Feedback_Question__r.EntityType__c, Feedback_Question__r.ExtractionType__c, Feedback_Question__r.Feedback__r.modelid__c, Feedback_Question__r.Feedback__r.IntentTolerance__c FROM Feedback_Question_Response__c WHERE ID=: feedbackQResponseId LIMIT 1];
+            retVal = responsequestion;
+            
+            //Return if already completed
+            if (retVal.Completed__c)
+            {
+                return retVal;
+            }
+            
+            //Else Set the variables
+            speakerMatch = retVal.Feedback_Question__r.Speaker__c;
+            matchValue = retVal.Feedback_Question__r.Match_Phrase__c;
+            modelID = retVal.Feedback_Question__r.Feedback__r.ModelID__c;
+            tolerance = Integer.valueOf(retVal.Feedback_Question__r.Feedback__r.IntentTolerance__c);
+            
+            
+            Id intentRTId = Schema.SObjectType.FeedbackQuestion__c.getRecordTypeInfosByName().get('Intent Match').getRecordTypeId();
+            Id keywordRTId = Schema.SObjectType.FeedbackQuestion__c.getRecordTypeInfosByName().get('Keyword Match').getRecordTypeId();
+            Id nerRTId = Schema.SObjectType.FeedbackQuestion__c.getRecordTypeInfosByName().get('NER Match').getRecordTypeId();
+            
+            if (retVal.Feedback_Question__r.RecordTypeId == intentRTId)
+            {
+                matchType = 'Intent';
+                matchValue = retVal.Feedback_Question__r.Intent_developer_name__c;
+            }
+            else if (retVal.Feedback_Question__r.RecordTypeId == keywordRTId && retVal.Feedback_Question__r.ExtractionType__c == 'RegEx')
+            {
+                matchType = 'RegEx';
+            }
+            else if (retVal.Feedback_Question__r.RecordTypeId == keywordRTId)
+            {
+                matchType = 'Keyword';
+            }
+            else if (retVal.Feedback_Question__r.RecordTypeId == nerRTId)
+            {
+                matchType = 'Named Entity';
+                matchValue = retVal.Feedback_Question__r.EntityType__c;
+            }
+        }
+        
+        //Check Keywords
+        if ((matchType.toLowerCase() == 'keyword' || matchType.toLowerCase() == 'regex' ) && 
+            (speaker.toLowerCase() == speakerMatch.toLowerCase() || speakerMatch.toLowerCase() == 'agent or customer')
+           )
+        {
+            String keywordMatch = checkKeywordMatch(utteranceText, matchValue, matchType);
+                if (String.isNotBlank(keywordMatch))
+                {
+                    needsUpdate = true;
+                    retVal.KeywordMatch__c = keywordMatch;
+                    retVal.Completed__c = true;
+                    retVal.Utterance__c = utteranceText;
+                    retVal.Speaker__c = speaker;
+                }
+        }
+        
+        //Check intents
+        else if (matchType.toLowerCase() == 'intent' && 
+                 (speaker.toLowerCase() == speakerMatch.toLowerCase() || speakerMatch.toLowerCase() == 'agent or customer')
+                )
+        {
+            List<String> matches = CheckEinsteinIntentMatch(utteranceText, modelId, tolerance);
+            for (String match : matches)
+            {
+                if (match.toLowerCase() == matchValue.toLowerCase())
+                {
+                    retVal.Completed__c = true;
+                    retVal.Utterance__c = utteranceText;
+                    retVal.KeywordMatch__c = utteranceText;
+                    retVal.Speaker__c = speaker;
+                    needsUpdate = true;
+                }
+            }
+        }
+        
+        //Check NER
+        else if (matchType.toLowerCase() == 'named entity' && 
+                 (speaker.toLowerCase() == speakerMatch.toLowerCase() || speakerMatch.toLowerCase() == 'agent or customer')
+                )
+        {
+            einsteinplay.Einstein_PredictionResult results = CheckEinsteinNER(utteranceText);
+            for (einsteinplay.Einstein_Probability cI : results.probabilities)
+            {
+                if (cI.probability * 100 >= tolerance && 
+                    matchValue.toLowerCase() == cI.label.toLowerCase()
+                   )
+                {
+                    retVal.Completed__c = true;
+                    retVal.Utterance__c = utteranceText;
+                    retVal.Speaker__c = speaker;
+                    retVal.KeywordMatch__c = cI.token;
+                    needsUpdate = true;
+                }
+            }
+        }
+        
+        if (needsUpdate && String.isNotBlank(feedbackQResponseId))
+        {
+            UPDATE retVal;
+        }
+        
+        return retVal;
+    }
+    
     private static List<Feedback_Question_Response__c> getFeedbackQuestionResponses(string recordId)
     {
         List<Feedback_Question_Response__c> responsequestions;
@@ -126,6 +248,17 @@ public class Monocle_Helper
             responsequestions = new List<Feedback_Question_Response__c>([SELECT Id, Name, Speaker__c, KeywordMatch__c, Question_Text__c, Completed__c, Utterance__c, Feedback_Question__r.RecordTypeId, Feedback_Question__r.Speaker__c, Feedback_Question__r.Intent_developer_name__c, Feedback_Question__r.Match_Phrase__c,  Feedback_Question__r.EntityType__c, Feedback_Question__r.ExtractionType__c FROM Feedback_Question_Response__c WHERE Feedback_Response__r.ChatTranscript__c =: recordId ORDER BY Feedback_Question__r.Order__c ASC]);
         }
         return responsequestions;
+    }
+    
+    @AuraEnabled
+    public static Feedback_Question_Response__c getFeedbackQuestionResponse(string recordId)
+    {
+        List<Feedback_Question_Response__c> responsequestions = new List<Feedback_Question_Response__c>([SELECT Id, Name, Speaker__c, KeywordMatch__c, Question_Text__c, Completed__c, Utterance__c, Feedback_Question__r.HelpText__c, Feedback_Question__r.RecordTypeId, Feedback_Question__r.Speaker__c, Feedback_Question__r.Intent_developer_name__c, Feedback_Question__r.Match_Phrase__c,  Feedback_Question__r.EntityType__c, Feedback_Question__r.ExtractionType__c FROM Feedback_Question_Response__c WHERE Id =: recordId LIMIT 1]);
+        if (responsequestions.size() > 0)
+        {
+            return responsequestions[0];
+        }
+        return null;
     }
     
     @AuraEnabled
@@ -243,6 +376,17 @@ public class Monocle_Helper
     }
     
     @AuraEnabled
+    public static void updateFeedbackItem(String recordId, Boolean completed, String speaker, String utterance, String keyword)
+    {
+        Feedback_Question_Response__c  fqr = [SELECT Completed__c, Utterance__c FROM Feedback_Question_Response__c  WHERE ID=: recordId];
+        fqr.completed__c = completed;
+        fqr.Utterance__c = utterance;
+        fqr.Speaker__c = speaker;
+        fqr.KeywordMatch__c = keyword;
+        UPDATE fqr;
+    }
+    
+    @AuraEnabled
     public static VoiceCall getVoiceCall(String recordId)
     {
         VoiceCall  vc = [SELECT Id, CallEndDateTime,CallDisposition,CallAcceptDateTime  FROM VoiceCall  WHERE ID=: recordId];
@@ -311,7 +455,7 @@ public class Monocle_Helper
         return results;
     }
     
-    public static einsteinplay.Einstein_PredictionResult CheckEinsteinNER(string utteranceText, decimal tolerance)
+    public static einsteinplay.Einstein_PredictionResult CheckEinsteinNER(string utteranceText)
     {
         einsteinplay.Einstein_PredictionService serviceNER = new einsteinplay.Einstein_PredictionService(einsteinplay.Einstein_PredictionService.Types.NER);
         einsteinplay.Einstein_PredictionResult predictionNER = serviceNER.predictNER('ENTITIES', utteranceText, 5, '');
