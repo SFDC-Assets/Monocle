@@ -41,7 +41,18 @@
         action.setCallback(this, function(a){
             var state = a.getState(); // get the response state
             if(state == 'SUCCESS' && a.getReturnValue() != null) {
-                component.set('v.QuestionResponses', a.getReturnValue());
+                //Only load the iteration once
+                var qResponses = component.get('v.QuestionResponses');
+                if (qResponses == null || qResponses.length == 0)
+                {
+                    component.set('v.QuestionResponses', a.getReturnValue());
+                }
+                else
+                {
+                    //Tell all the subcomponents to refresh
+                    var appEvent = $A.get("e.c:Monocle_ItemRefresh");
+                    appEvent.fire();
+                }
                 
                 //Refresh sentiment component
                 var sentimentComponent = component.find("sentimentComp")

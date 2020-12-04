@@ -9,10 +9,10 @@
     
     <ltng:require scripts="{!$Resource.monocle_chart}" afterScriptsLoaded="{!c.afterScriptsLoaded}" />
     <aura:method name="refreshResults" action="{!c.doRefresh}" access="PUBLIC" /> 
-        
+    
     <aura:if isTrue="{!v.chartVisible}">
         <div style="width:100%;margin-bottom:10px;padding-right:5px;">
-            <span style="padding-left:10px;padding-top:10px;display:inline-block;">Sentiment Tracking</span>
+            <span style="padding-left:10px;padding-top:10px;display:inline-block;"><b>Sentiment Tracking</b></span>
             <canvas aura:id="lineChart" id="lineChart"/>
         </div>
     </aura:if>

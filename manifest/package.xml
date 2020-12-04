@@ -16,6 +16,7 @@
         <members>FeedbackQuestion__c.EntityType__c</members>
         <members>FeedbackQuestion__c.ExtractionType__c</members>
         <members>FeedbackQuestion__c.Feedback__c</members>
+        <members>FeedbackQuestion__c.HelpText__c</members>
         <members>FeedbackQuestion__c.Intent_developer_name__c</members>
         <members>FeedbackQuestion__c.Match_Phrase__c</members>
         <members>FeedbackQuestion__c.Order__c</members>
@@ -60,11 +61,28 @@
     <types>
         <members>Monocle_FeedbackViewer</members>
         <members>Monocle_SentimentChart</members>
+        <members>Monocle_FeedbackItem</members>
+        <members>Monocle_ItemRefresh</members>
         <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>FeedbackQuestion__c-Feedback Intent Question</members>
+        <members>FeedbackQuestion__c-Feedback Keyword Question</members>
+        <members>FeedbackQuestion__c-Feedback NER Question</members>
+        <members>FeedbackQuestion__c-Feedback Question Layout</members>
+        <members>FeedbackResponse__c-Feedback Response Layout</members>
+        <members>FeedbackSentimentResponse__c-Feedback Sentiment Response Layout</members>
+        <members>Feedback_Question_Response__c-Feedback Question Response Layout</members>
+        <members>Feedback__c-Feedback Layout</members>
+        <name>Layout</name>
     </types>
     <types>
         <members>monocle_chart</members>
         <name>StaticResource</name>
+    </types>
+    <types>
+        <members>Monocle_Perms</members>
+        <name>PermissionSet</name>
     </types>
     <version>50.0</version>
 </Package>

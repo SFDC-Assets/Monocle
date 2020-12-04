@@ -3,4 +3,5 @@
         <sfdc:object>VoiceCall</sfdc:object>
         <sfdc:object>LiveChatTranscript</sfdc:object>
     </sfdc:objects>
+        <design:attribute name="disabled" label="Disable Agent Input" description="If set, the agent will not be allowed to update/clear voice activated control" required="false" />
 </design:component>

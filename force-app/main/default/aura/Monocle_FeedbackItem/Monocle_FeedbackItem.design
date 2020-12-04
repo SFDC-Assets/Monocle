@@ -1,0 +1,16 @@
+<design:component label="Monocle - Voice Enabled Input">
+	<design:attribute name="componentTitle" label="01: Component Title" description="A title to show at the top of the component. (optional)" required="false" />
+    <design:attribute name="feedbackQRId" label="02: Feedback Question Response Id" description="If this represents a feedback question response, set it's id here, and you don't need to specify the other properties below. (optional)" required="false" />
+    <design:attribute name="inputTitle" label="03: Input Label" description="A label for the input. (optional)" required="false" />
+    <design:attribute name="helpText" label="04: Help Text" description="Specify a help text that describes the input" required="false" />
+    <design:attribute name="matchType" label="05: Match Type" description="The type of match (valid values: Intent,Keyword,RegEx,Named Entity)" datasource="Intent,Keyword,RegEx,Named Entity" default="Intent" required="false" />
+    <design:attribute name="matchValue" label="06: Match Value" description="The value to match" required="false" />
+    <design:attribute name="speakerMatch" label="07: Speaker" description="Who needs to speak the utterance? (valid values: Agent,Customer,Agent or Customer)" datasource="Agent,Customer,Agent or Customer" default="Agent" required="false" />
+    <design:attribute name="modelID" label="08: ModelID" description="The Intent modelID to use for Intent matches" required="false" />
+    <design:attribute name="tolerance" label="09: Intent Match Tolerance" description="The minimum intent match confidence (expressed as a percent)" required="false" default="65" />
+    <design:attribute name="disabled" label="10: Disable Agent Input" description="If set, the agent will not be allowed to update/clear voice activated control" required="false" />
+    
+    <design:attribute name="oValueBool" label="11: Output Boolean" description="Output Set to true if match was found. False if no match." />
+    <design:attribute name="oValueString" label="12: Output String" description="Output Match Keyword, RegEx, or Entity." />
+    
+</design:component>

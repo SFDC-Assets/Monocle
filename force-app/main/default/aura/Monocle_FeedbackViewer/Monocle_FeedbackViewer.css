@@ -6,6 +6,28 @@
 {
     padding-top:0px;
 }
+.THIS .radialProgressBar {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: #ddd;
+  float:left;
+  margin-left:10px;
+  margin-top:8px;
+  margin-right:5px;
+}
+.THIS .radialProgressBar .overlay {
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  margin: auto;
+  background: #fff;
+  text-align: center;
+  padding-top: 25%;
+}
 
 .THIS.wrapper {
 position:relative;
@@ -53,30 +75,6 @@ position:relative;
     color: #C23934;
 }
 
-.cMonocle_FeedbackViewer.wrapper{
-	border-top-right-radius:4px;
-	border-top-left-radius:4px;
-    border-bottom-right-radius:4px;
-	border-bottom-left-radius:4px;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.10);
-}
-
-.cMonocle_FeedbackViewer .center-card{
-    vertical-align:middle;
-    padding-top:10px;
-    padding-bottom:10px;
-    height:75px;
-    padding-left:5px;
-    float:left;
-}
-
-.cMonocle_FeedbackViewer .right-center-card{
-    padding-top:5px;
-    padding-right:15px;
-    float:right;
-}
-
 
 .cMonocle_FeedbackViewer .top-card{
 	float:left;
@@ -95,40 +93,13 @@ position:relative;
     font-size:16px;
     padding-bottom:3px;
     float:left;
-    margin-top:17px;
+    margin-top:24px;
     margin-left:3px;
     vertical-align:middle;
 }
 
 .cMonocle_FeedbackViewer .top-card img{
 	margin-bottom:-6px;
-}
-
-
-.cMonocle_FeedbackViewer .bottom-card{
-	padding-top:80px;
-    padding-left:15px;
-    background-color:#ffffff;
-    width:100%;
-    min-height:150px;
-    padding-bottom:15px;
-    border-bottom-right-radius:4px;
-	border-bottom-left-radius:4px;
-}
-
-.cMonocle_FeedbackViewer .bottom-card li{
-    padding-bottom:8px;
-}
-
-.cMonocle_FeedbackViewer .bottom-card li img{
-    margin-top:-3px;
-    padding-right:4px;
-}
-
-.cMonocle_FeedbackViewer .bottom-card h3{
-    padding-top:15px;
-	padding-bottom:8px;
-    font-size:14px;
 }
 
 .THIS.title{
@@ -142,4 +113,59 @@ position:relative;
     width: 50px;
     margin-right: 5px;
     margin-top: -1px;
+}
+
+.THIS .progress-100 {
+  background-image: -webkit-linear-gradient(left, #0F8048 50%, transparent 50%), -webkit-linear-gradient(left, #ddd 50%, #0F8048 50%);
+  background-image: linear-gradient(90deg, #0F8048 50%, transparent 50%), linear-gradient(90deg, #ddd 50%, #0F8048 50%);
+}
+
+.THIS .progress-90 {
+  background-image: -webkit-linear-gradient(36deg, #0F8048 50%, transparent 50%), -webkit-linear-gradient(left, #ddd 50%, #0F8048 50%);
+  background-image: linear-gradient(54deg, #0F8048 50%, transparent 50%), linear-gradient(90deg, #ddd 50%, #0F8048 50%);
+}
+
+.THIS .progress-80 {
+  background-image: -webkit-linear-gradient(72deg, #0F8048 50%, transparent 50%), -webkit-linear-gradient(left, #ddd 50%, #0F8048 50%);
+  background-image: linear-gradient(18deg, #0F8048 50%, transparent 50%), linear-gradient(90deg, #ddd 50%, #0F8048 50%);
+}
+
+.THIS .progress-70 {
+  background-image: -webkit-linear-gradient(108deg, #F19D46 50%, transparent 50%), -webkit-linear-gradient(left, #ddd 50%, #F19D46 50%);
+  background-image: linear-gradient(-18deg, #F19D46 50%, transparent 50%), linear-gradient(90deg, #ddd 50%, #F19D46 50%);
+}
+
+.THIS .progress-60 {
+  background-image: -webkit-linear-gradient(144deg, #F19D46 50%, transparent 50%), -webkit-linear-gradient(left, #ddd 50%, #F19D46 50%);
+  background-image: linear-gradient(-54deg, #F19D46 50%, transparent 50%), linear-gradient(90deg, #ddd 50%, #F19D46 50%);
+}
+
+.THIS .progress-50 {
+  background-image: -webkit-linear-gradient(right, #F19D46 50%, transparent 50%), -webkit-linear-gradient(left, #ddd 50%, #F19D46 50%);
+  background-image: linear-gradient(-90deg, #F19D46 50%, transparent 50%), linear-gradient(90deg, #ddd 50%, #F19D46 50%);
+}
+
+.THIS .progress-40 {
+  background-image: -webkit-linear-gradient(left, #ddd 50%, transparent 50%), -webkit-linear-gradient(36deg, #ddd 50%, #C23934 50%);
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%), linear-gradient(54deg, #ddd 50%, #C23934 50%);
+}
+
+.THIS .progress-30 {
+  background-image: -webkit-linear-gradient(left, #ddd 50%, transparent 50%), -webkit-linear-gradient(72deg, #ddd 50%, #C23934 50%);
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%), linear-gradient(18deg, #ddd 50%, #C23934 50%);
+}
+
+.THIS .progress-20 {
+  background-image: -webkit-linear-gradient(left, #ddd 50%, transparent 50%), -webkit-linear-gradient(108deg, #ddd 50%, #C23934 50%);
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%), linear-gradient(-18deg, #ddd 50%, #C23934 50%);
+}
+
+.THIS .progress-10 {
+  background-image: -webkit-linear-gradient(left, #ddd 50%, transparent 50%), -webkit-linear-gradient(144deg, #ddd 50%, #C23934 50%);
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%), linear-gradient(-54deg, #ddd 50%, #C23934 50%);
+}
+
+.THIS .progress-0 {
+  background-image: -webkit-linear-gradient(left, #ddd 50%, transparent 50%), -webkit-linear-gradient(right, #ddd 50%, #C23934 50%);
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%), linear-gradient(-90deg, #ddd 50%, #C23934 50%);
 }
